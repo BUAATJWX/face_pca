@@ -11,7 +11,7 @@
 clear all
 tic;
 
-%¶ÁÈëÑù±¾¿Õ¼äÊı¾İ
+%è¯»å…¥æ ·æœ¬ç©ºé—´æ•°æ®
 Img_Mat = [ ];
 Train_Mat = [ ];
 Train_Labels = [ ];
@@ -19,11 +19,11 @@ Test_Mat = [ ];
 Test_Labels = [ ];
 for i = 1:40    
     for j = 1:10
-    str = strcat('I:\Ñ§Ï°ÊÂÎñ\Ä£Ê½Ê¶±ğ\6Ïµ\×÷Òµ2\µÚ¶ş´Î´ó×÷ÒµÏà¹Ø\ORLÈËÁ³¿â\ORL92112\bmp\s',  ...
+    str = strcat('I:\å­¦ä¹ äº‹åŠ¡\æ¨¡å¼è¯†åˆ«\6ç³»\ä½œä¸š2\ç¬¬äºŒæ¬¡å¤§ä½œä¸šç›¸å…³\ORLäººè„¸åº“\ORL92112\bmp\s',  ...
                          int2str(i),'\',int2str(j),'.bmp');
     temp_mat = imread(str);
     [r,c] = size(temp_mat);
-    temp_mat = reshape(temp_mat,r*c,1);   %½«Í¼Æ¬×ª»¯ÎªÒ»¸öÁĞÏòÁ¿£¬ÕâÑùÃ¿ĞĞÊÇÒ»¸öÎ¬¶È
+    temp_mat = reshape(temp_mat,r*c,1);   %å°†å›¾ç‰‡è½¬åŒ–ä¸ºä¸€ä¸ªåˆ—å‘é‡ï¼Œè¿™æ ·æ¯è¡Œæ˜¯ä¸€ä¸ªç»´åº¦
     if j == 4|| j ==8
         Test_Mat = [Test_Mat, temp_mat];
         Test_Labels = [Test_Labels; i,j];
@@ -35,13 +35,13 @@ for i = 1:40
     end
 end
 
-%ÀûÓÃÑµÁ·Ñù±¾¹¹½¨ÌØÕ÷Á³¿Õ¼ä,×¢ÒâÒòÎªAµÄĞĞÊıÔ¶Ô¶´óÓÚÁĞÊı£¬ËùÒÔ
-%´Ë´¦ÓÃA'AµÄÌØÕ÷ÖµÓëAA'ÏàµÈ×ö±ä»»£¬Ëõ¶Ì¼ÆËãÊ±¼ä
+%åˆ©ç”¨è®­ç»ƒæ ·æœ¬æ„å»ºç‰¹å¾è„¸ç©ºé—´,æ³¨æ„å› ä¸ºAçš„è¡Œæ•°è¿œè¿œå¤§äºåˆ—æ•°ï¼Œæ‰€ä»¥
+%æ­¤å¤„ç”¨A'Açš„ç‰¹å¾å€¼ä¸AA'ç›¸ç­‰åšå˜æ¢ï¼Œç¼©çŸ­è®¡ç®—æ—¶é—´
 differ_mat = bsxfun(@minus, double(Train_Mat), mean(Train_Mat,2));
 L_Mat = (differ_mat' * differ_mat);
-[eiv, eic] = eig(L_Mat);   %ÇóÈ¡ÌØÕ÷ÏòÁ¿eivÒÔ¼°ÌØÕ÷Öµeic ,ÌØÕ÷ÖµÉıĞò
+[eiv, eic] = eig(L_Mat);   %æ±‚å–ç‰¹å¾å‘é‡eivä»¥åŠç‰¹å¾å€¼eic ,ç‰¹å¾å€¼å‡åº
 
-% °´ÕÕãĞÖµÑ¡È¡µÚk¸öÖ÷³É·Ö,²¢ÇóÈ¡ÌØÕ÷Á³¿Õ¼äÒÔ¼°Ô­Êı¾İÔÚÍ¶Ó°¿Õ¼äµÄ×ø±êÖµ
+% æŒ‰ç…§é˜ˆå€¼é€‰å–ç¬¬kä¸ªä¸»æˆåˆ†,å¹¶æ±‚å–ç‰¹å¾è„¸ç©ºé—´ä»¥åŠåŸæ•°æ®åœ¨æŠ•å½±ç©ºé—´çš„åæ ‡å€¼
 SelectThrehold = 0.95;
 Select_sum = 0;
 diag_eic = diag(eic);
@@ -50,19 +50,19 @@ L_eig_vec = [ ];
 for i = size(diag_eic):-1:1
      Select_sum = Select_sum +diag_eic(i,1);
     if (Select_sum / Sum_total > SelectThrehold)
-      L_eig_vec =eiv(:,i:size(diag_eic));    %Ñ¡È¡ÌØÕ÷Öµ¹±Ï×´óÓÚãĞÖµµÄÌØÕ÷ÏòÁ¿×é
+      L_eig_vec =eiv(:,i:size(diag_eic));    %é€‰å–ç‰¹å¾å€¼è´¡çŒ®å¤§äºé˜ˆå€¼çš„ç‰¹å¾å‘é‡ç»„
       break;
     end
 end
-for i = 1:size(L_eig_vec,2)      %ÌØÕ÷ÏòÁ¿µ¥Î»»¯  
+for i = 1:size(L_eig_vec,2)      %ç‰¹å¾å‘é‡å•ä½åŒ–  
     L_eig_vec(:,i) = L_eig_vec(:,i) / norm(L_eig_vec(:,i));  
 end  
-Ei_Face = differ_mat * L_eig_vec;     %µÃµ½Ğ­·½²î¾ØÕóµÄÌØÕ÷ÏòÁ¿×é³ÉµÄÌØÕ÷Á³¿Õ¼ä
+Ei_Face = differ_mat * L_eig_vec;     %å¾—åˆ°åæ–¹å·®çŸ©é˜µçš„ç‰¹å¾å‘é‡ç»„æˆçš„ç‰¹å¾è„¸ç©ºé—´
 Train_Project = Ei_Face' * differ_mat;
 test_temp =  bsxfun(@minus, double(Test_Mat), mean(Test_Mat,2));
 Test_Project = Ei_Face' * test_temp;
 
-%¼ÆËãÅ·ÊÏ¾àÀë,Íê³ÉÊ¶±ğ
+%è®¡ç®—æ¬§æ°è·ç¦»,å®Œæˆè¯†åˆ«
 index = 0;
 match_index =[];
 for j =1: size(Test_Project,2)
@@ -71,17 +71,30 @@ for j =1: size(Test_Project,2)
         vec_dist = norm(Test_Project(:,j) - Train_Project(:,i));
         com_dist = [com_dist, vec_dist];
     end
-    [~,match_index] = min(com_dist);
-    if Train_Labels(match_index,1) == Test_Labels(j,1)
+    [~ , match_index(j)] = min(com_dist);
+    if Train_Labels(match_index(j),1) == Test_Labels(j,1)
         index = index + 1;
     end
 end
 acc = index / size(Test_Project,2) ;
-toc;
-temp = sprintf('The Accuracy by Euclidean distance and PCA is   %f ',acc);
+
+
+%è°ƒç”¨libSVM ï¼Œå®ç°åˆ†ç±»
+lowvec_train = min(Train_Project);  
+upvec_train = max(Train_Project);  
+Train_svm = scaling(Train_Project , lowvec_train , upvec_train);
+lowvec_test = min(Test_Project);  
+upvec_test = max(Test_Project);  
+Test_svm = scaling(Test_Project , lowvec_test , upvec_test);
+[~,bestc,bestg] = SVMcgForClass(Train_Labels,Train_svm' , -8, 4, -8 , 8 , 5, 1, 1, 4.5);  %è½¬åŒ–ä¸ºåˆ—ç»´åº¦
+cmd = ['-c ',num2str(bestc),' -g ',num2str(bestg)];
+model = svmtrain(Train_Labels , Train_svm' , cmd);
+[plabel ,  accuracy , dec] = svmpredict(Test_Labels , Test_svm' , model);
+toc ;
+temp1 = sprintf('The Accuracy by Euclidean distance and PCA is   %f ',acc);
+disp(temp1);
+temp = sprintf('The Accuracy by SVM and PCA is  %f ',accuracy(1,1));
 disp(temp);
-
-
-
+save model_orl.mat  model
 
 
